@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title id="indexTitle">Let's rock!</title>
+  <link rel="icon" href="../static/image/page_icon.png">
+  <div style="display: flex; position: absolute; top: 0; right: 0;">
+    <img src="../static/image/minionKiss.gif" style="width: 100px; height: 100px;"></img>
+    <img src="../static/image/MinionBruce.gif" style="width: 100px; height: 100px;"></img>
+    <img src="../static/image/minionFire.gif" style="width: 100px; height: 100px;"></img>
+    <img src="../static/image/minionSpin.gif" style="width: 100px; height: 100px;"></img>
+    <img src="../static/image/minionDance.gif" style="width: 100px; height: 100px;"></img>
+    <img src="../static/image/minionGuitar.gif" style="width: 100px; height: 100px;"></img>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script> -->
+  <script src="../static/js/localChart.js"></script>
+  <script src="../static/js/localChartUnd.js"></script>
+</head>
+<style>
+  body {
+    background-color: #0b0c0ce0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  .img-link-container {
+    display: flex;
+  }
+  .img-link-container a {
+    margin-right: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: rgb(250, 4, 86); /* 设置链接的颜色 */
+    text-decoration: none; /* 移除链接的下划线样式 */
+    font-weight: bold;
+  }
+
+  .img-link-container a:hover {
+    color: rgba(255, 153, 0, 0.74); /* 设置链接的悬停颜色 */
+  }
+  .blocks {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    vertical-align: top;
+    margin-right: 2px;
+  }
+  .block {
+    width: 5px;
+    height: 5px;
+    margin-bottom: 1px;
+  }
+  .prevBlocks {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    vertical-align: top;
+    margin-right: 2px;
+  }
+  .prevBlock {
+    width: 5px;
+    height: 5px;
+    margin-bottom: 1px;
+  }
+  .ublocks {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    vertical-align: top;
+    margin-left: 2px;
+  }
+  .ublock {
+    width: 5px;
+    height: 5px;
+    margin-bottom: 1px;
+  }
+  .oblocks {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    vertical-align: top;
+    margin-left: 2px;
+  }
+  .oblock {
+    width: 5px;
+    height: 5px;
+    margin-bottom: 1px;
+  }
+  .scroll-box {
+    overflow-x: auto;
+    white-space: nowrap;
+    height: 32px;
+    margin-bottom: 10px;
+  }
+  .scroll-box::-webkit-scrollbar {
+    width: 0.5em;  /* 滚动条宽度 */
+    height: 0.25em;  /* 滚动条高度 */
+    background-color: #1A1A1A; /* 滚动条背景色 */
+  }
+  .scroll-box::-webkit-scrollbar-thumb {
+    background-color: #424242; /* 滚动条拖拽块的颜色 */
+  }
+  body::-webkit-scrollbar {
+    width: 0.5em;  /* 滚动条宽度 */
+    height: 0.5em;  /* 滚动条高度 */
+    background-color: #1A1A1A; /* 滚动条背景色 */
+  }
+  body::-webkit-scrollbar-thumb {
+      background-color: #424242; /* 滚动条拖拽块的颜色 */
+  }
+  h1 {
+    color: #FFFFFF;
+    font-size: 18px;
+    width: fit-content;
+  }
+  .table-container {
+    overflow: auto;
+    display: block;
+  }
+  /* 设置表格容器内部滚动条的样式 */
+  .table-container::-webkit-scrollbar {
+    width: 8px; /* 设置滚动条宽度 */
+  }
+  .table-container::-webkit-scrollbar-track {
+    background-color: #1A1A1A; /* 设置滚动条轨道背景色 */
+  }
+  .table-container::-webkit-scrollbar-thumb {
+    background-color: #888; /* 设置滚动条滑块颜色 */
+  }
+  .table-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* 设置滚动条滑块悬停时的颜色 */
+  }
+  thead th {
+    position: sticky;
+    top: 0;
+    background-color: #424242;
+    color: #CCCCCC;
+    font-size: 12px;
+  }
+  table {
+    border-collapse: collapse;
+    background-color: #424242;
+    color: #CCCCCC;
+    font-size: 12px;
+    width: 100%;
+    height: 100%;
+  }
+  th, td {
+    text-align: center;
+    padding: 8px;
+  }
+  th {
+    background-color: #424242;
+    color: #CCCCCC;
+    border-bottom: 2px solid #aaa;
+  }
+  tr:nth-child(odd) {
+    background-color: #333333;
+  }
+  tr:nth-child(even) {
+    background-color: #212121;
+  }
+  tr:hover {
+    background-color: #424242;
+  }
+  size-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+  input[type=text] {
+    width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  input[type=number] {
+    width: 10%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  input[type=submit] {
+    background-color: #FF4081;
+    color: #e6e6e6;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+  }
+  input[type=submit]:hover {
+    background-color: #FF6699;
+  }
+  .double-dash-line {
+    position: relative;
+    width: 100%;
+    height: 1.2em; /* 调整为需要的高度 */
+    text-align: center;
+    background-color: transparent; /* 透明背景色 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* 添加双虚线效果 */
+    border-top: 3px double goldenrod;
+    border-bottom: 3px double goldenrod;
+  }
+
+  .double-dash-line::before {
+    content: attr(text-title);
+    display: inline;
+    color: goldenrod;
+    font-weight: bold; /* 加粗文字 */
+    padding: 0 10px; /* 调整为需要的值 */
+    position: relative;
+    z-index: 1; /* 将文字置于线的前面 */
+  }
+  .notification {
+    display: none;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 16px; /* 修改字体大小 */
+    opacity: 0.86;
+    border-radius: 3px;
+  }
+  button {
+    border-radius: 5px;
+  }
+  #notification-text {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 16px; /* 修改字体大小 */
+  }
+
+  #close-notification {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  .calculator {
+    margin-bottom: 20px;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 3px;
+    padding: 10px;
+    background-color: rgba(253, 165, 165, 0.911);
+  }
+  .calculator input {
+    width: 8%;
+    margin-bottom: 10px;
+  }
+  .calculator button {
+    margin-bottom: 10px;
+  }
+  .output {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* 设置字体系列 */
+    font-size: 14px; /* 设置字体大小 */
+    color: navy; /* 设置字体颜色 */
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .sub-output {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* 设置字体系列 */
+    font-size: 14px; /* 设置字体大小 */
+    color: navy; /* 设置字体颜色 */
+    border: 2px solid navy;
+    padding: 10px;
+    flex: 1 0 200px;
+    margin: 5px;
+  }
+</style>
+<body>
+  <h1>"Live Monitor - ${timeString}"</h1>
+  <br>
+  <div class="img-link-container">
+    <a href="/position_pie" target="_blank">Position Pie</a>
+    <a href="/position_table" target="_blank">Position Summary</a>
+    <a href="/VIP_position" target="_blank">Vip Position</a>
+    <a href="/hist_mkt_val_chg" target="_blank">Mkt Value Snap</a>
+    <a href="/pos_overview" target="_blank">Position Overview</a>
+  </div>
+  <form id="vip_broker_form">
+    <label for="brokers"></label>
+    <input type="text" id="brokers" name="brokers">
+    <input type="submit" value="Select Brokers">
+  </form>
+  <br>
+  <div style="display: inline-block; margin-bottom: 10px;">
+    <input type="checkbox" id="optionOnly" name="optionOnly">
+    <label for="optionOnly" style="font-size: 14px; color: aliceblue; font: bold; font-family: 黑体;">仅看期权品种</label>
+
+    <input type="checkbox" id="signalTargetsOnly" name="signalTargetsOnly">
+    <label for="signalTargetsOnly" style="font-size: 14px; color: aliceblue; font: bold; font-family: 黑体;">仅看今日模型目标品种</label>
+
+    <input type="checkbox" id="OiIncOnly" name="OiIncOnly">
+    <label for="OiIncOnly" style="font-size: 14px; color: aliceblue; font: bold; font-family: 黑体;">仅看持仓新高品种</label>
+  </div>
+  <br>
+  <div id="notification" class="notification" msg-tag="" sym-tag="">
+    <span id="notification-text"></span>
+    <button id="close-notification" onclick="closeNotification()">X</button>
+  </div>
+  <div id="vipRankContainer", class="vipRankContainer" style="display: flex; max-height: 400px;">
+    <div id="vipPerformanceRankContainer" style=" display:inline-block; border: none; width: 100%;">
+      <canvas id="vipPerformanceRankingCanvas"></canvas>
+    </div>
+  </div>
+  <br>
+  <div id="histIVContainer", class="histIVContainer" style="display: flex; max-height: 600px;">
+    <div id="histIvAvgContainer" style=" display:inline-block; border: none; width: 100%;">
+      <canvas id="histIvAvgCanvas"></canvas>
+    </div>
+  </div>
+  <br>
+  <button id="openOptSymMktSizePage">Mkt Size by Option Symbol</button>
+  <br>
+
+  <div style="display: flex; justify-content: space-between; align-items: space-between; max-height: 120px;">
+    <div class="firstFilterContainer" style="display: block; overflow: auto; max-height: 120px; width: 50%;">
+      <form id="mktCap-filter">
+        <label for="filterValue"></label>
+        <input type="number" id="mktCapValue" name="mktCapValue" style="width: 40%;">
+        <input type="submit" value="Mkt Cap Mil.">
+      </form>
+      <form id="undPageForm">
+        <label for="undPage"></label>
+        <input type="text" id="undContract" name="undContract" style="width: 40%;">
+        <input type="submit" value="Search Underlying">
+      </form>
+    </div>
+
+    <!-- <div class="extreme-price-note-container" style="display: block; overflow: auto; max-height: 120px; width: 25%; margin-left: 0; color: aliceblue; scrollbar-width: thin; scrollbar-color: aliceblue; border: 2px solid gold; border-radius: 3px;">
+      
+    </div>
+
+    <div class="extreme-position-note-container" style="display: block; overflow: auto; max-height: 120px; width: 25%; color: aliceblue; scrollbar-width: thin; scrollbar-color: aliceblue; border: 2px solid gold; border-radius: 3px;">
+      
+    </div> -->
+  </div>
+  <br>
+  <div style="display: flex; justify-content: space-between; align-items: space-between; max-height: 200px;">
+    <div class="table-container" style="display: block; overflow: auto; max-height: 200px; width: 64%;">
+      <table id="future-targets">
+        <thead>
+          <tr>
+            <th>future targets</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 表格内容行 -->
+        </tbody>
+      </table>
+    </div>
+    <div class="exchange-earliest-expiry" style="display: block; overflow: auto; max-height: 200px; width: 34%;">
+      <table id="exchange-earliest-expiry-table">
+        <thead>
+          <tr>
+            <th>earliest expiry table</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 表格内容行 -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <h5 style="max-height: 10px; color: #FFFFFF;">Open Interest Confidence Index</h5>
+  <div class="table-container" style="overflow-x: auto; overflow-y: auto; max-height: 300px;">
+    <table id="oi-chg-pctg-table" title="Open Interest Confidence Index Table">
+      <tr>
+        <th>oi chg pctg table</th>
+      </tr>
+    </table>
+  </div> -->
+  <!-- <h5 style="max-height: 10px; color: #FFFFFF;">Open Interest Peaking</h5>
+  <div class="table-container" style="overflow-x: auto;">
+    <table id="oi-status-table">
+      <tr>
+        <th>oi status table</th>
+      </tr>
+    </table>
+  </div> -->
+  <h5 style="max-height: 10px; color: #FFFFFF;">Unusual Option Whales</h5>
+  <div class="table-container" style="overflow-x: auto; overflow-y: auto; max-height: 300px;">
+    <table id="unusual-option-whales-table" title="Unusual Option Whales Table">
+      <tr>
+        <th>unusual option whales table</th>
+      </tr>
+    </table>
+  </div>
+
+  <br>
+
+  <div id="barContainer2", class="barContainer2" style="display: flex; max-height: 600px;">
+    <div id="priceDeviationContainer" style=" display:inline-block; border: none; width: 100%;">
+      <canvas id="priceDeviationCanvas"></canvas>
+    </div>
+  </div>
+  <br>
+
+  <div id="barContainer", class="barContainer" style="display: flex; max-height: 600px;">
+    <div id="capBarContainer" style=" display:inline-block; border: none; width: 100%;">
+      <canvas id="mktCapCanvas"></canvas>
+    </div>
+  </div>
+  <br>
+
+  <div class="double-dash-line" text-title="TRADE READY: TARGET WATCH LIST"></div>
+  <br>
+  <div id="calculators">
+    <div class="calculator", id="blank">
+      <label for="target-contract" style="font-size: 14px; color: navy; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Target</label>
+      <input type="text" id="target-contract" name="target-contract" required>
+
+      <label for="current-price" style="font-size: 14px; color: navy; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Now</label>
+      <input type="number" id="current-price" name="current-price" step="0.001" required>
+
+      <label for="cost-range" style="font-size: 14px; color: navy; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Cost</label>
+      <input type="number" id="cost-range-low" name="cost-range-low" step="0.001" required>
+      <label for="cost-range" style="font-size: 14px; color: navy; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">~ </label>
+      <input type="number" id="cost-range-high" name="cost-range-high" step="0.001" required>
+
+      <label for="aim-price" style="font-size: 14px; color: navy; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Aim</label>
+      <input type="number" id="aim-price" name="aim-price" step="0.001" required>
+
+      <label for="volatility" style="font-size: 14px; color: navy; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Vol</label>
+      <input type="number" id="volatility" name="volatility" step="0.001" required>
+
+      <label for="time-to-expiration" style="font-size: 14px; color: navy; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Exp</label>
+      <input type="number" id="time-to-expiration" name="time-to-expiration" required>
+
+      <label for="risk-free-rate" style="font-size: 14px; color: navy; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Rate</label>
+      <input type="number" id="risk-free-rate" name="risk-free-rate" step="0.001" value="0.02" required>
+
+      <label for="ratio" style="font-size: 14px; color: navy; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Ratio*</label>
+      <input type="number" id="ratio" name="ratio" step="0.001">
+
+      <button onclick="calculate(event)">Calculate</button>
+      <button onclick="removeCalculator(event)" style="margin-left: 36px;">X</button>
+      <div class="output"></div>
+    </div>
+  </div>
+  <button onclick="addCalculator()">Add Calculator</button>
+  <button id="sentimentPage">Market Sentiment</button>
+  <button onclick="openTopSymbolsMainContractTrackingPage()">Track Top Symbols</button>
+  <br>
+  <br>
+  
+  <div class="double-dash-line" text-title="SELECTED TARGETS"></div>
+  <br>
+  <form id="quest-form">
+    <label for="quest"></label>
+    <input type="text" id="quest" name="quest">
+    <input type="submit" value="Submit">
+  </form>
+  <div style="margin-bottom: 5px;">
+    <input type="checkbox" id="audioNotify" name="audioNotify">
+    <label for="audioNotify" style="font-size: 14px; color: aliceblue; font: bold; font-family: 黑体;">开启目标合约报警</label>  
+  </div>
+  <br>
+  <table id="response-table">
+    <tr>
+      <th>Response</th>
+    </tr>
+  </table>
+  <br>
+  <form id="option-calculator">
+    <input type="checkbox" id="call" name="call" checked>
+    <label for="call" style="font-size: 14px; color: rgb(238, 20, 20); font: bold; font-family: 'Courier New', Courier, monospace;">Call</label>
+
+    <input type="checkbox" id="put" name="put">
+    <label for="put" style="font-size: 14px; color: rgb(17, 209, 104); font: bold; font-family: 'Courier New', Courier, monospace;">Put</label>
+
+    <label for="stock-price" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Underlying</label>
+    <input type="number" id="stock-price" name="stock-price" step="0.001" required>
+
+    <label for="strike-price" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Strike</label>
+    <input type="number" id="strike-price" name="strike-price" step="0.001" required>
+
+    <label for="risk-free-rate" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Rate</label>
+    <input type="number" id="risk-free-rate" name="risk-free-rate" step="0.001" value="0.02" required>
+
+    <label for="volatility" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Vol</label>
+    <input type="number" id="volatility" name="volatility" step="0.001" required>
+
+    <label for="time-to-expiration" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Expiry</label>
+    <input type="number" id="time-to-expiration" name="time-to-expiration" required>
+
+    <button type="submit" style="background-color: rgb(255, 198, 9); color: rgb(8, 48, 88); padding: 10px 20px; font: bold; font-family: 'Courier New', Courier, monospace;">Run</button>
+  </form>
+  <p id="result" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace;"></p>
+  <br>
+  
+  <div class="double-dash-line" text-title="BROKER SELECT"></div>
+  <br>
+  <div style="margin-bottom: 5px;">
+    <a style="font-size: 14px; color: aliceblue; font: bold; font-family: 黑体; margin-bottom: 10px;">* 背景色代表期权品种 | 白框代表增仓符合要求 *</a>
+  </div>
+  <div style="display: flex; justify-content: space-between; align-items: space-between; max-height: 200px;">
+    <div id="scrollBoxContainer" class="scrollBoxContainer" style="display: block; max-height: 200px; width: 70%;">
+      <div class="scroll-box" id="longTargets"></div>
+      <br>
+      <div class="scroll-box" id="shortTargets"></div>
+      <br>
+      <div class="scroll-box" id="nilTargets"></div>
+    </div>
+
+    <div class="live-table-filters" style="display: block; overflow: auto; max-height: 200px; width: 26%;">
+      <form id="ratio-filter">
+        <label for="filterValue"></label>
+        <input type="number" id="filterValueMin" name="ratioMin" style="width: 30%;">
+        <input type="number" id="filterValueMax" name="ratioMax" style="width: 30%;">
+        <input type="submit" value="Ratio Limit">
+      </form>
+      <form id="expiry-filter">
+        <label for="filterValue"></label>
+        <input type="number" id="expiryMin" name="ExpMin" style="width: 30%;">
+        <input type="number" id="expiryMax" name="ExpMax" style="width: 30%;">
+        <input type="submit" value="Expiry Limit">
+      </form>
+      <form id="loss-filter">
+        <label for="filterValue"></label>
+        <input type="number" id="lossMax" name="LossMax" style="width: 60%;">
+        <input type="submit" value="Loss Limit">
+      </form>
+    </div>
+  </div>
+  <div style="display: inline-block; margin-bottom: 10px;">
+    <input type="checkbox" id="capitalChgSymbol" name="capitalChgSymbol">
+    <label for="capitalChgSymbol" style="font-size: 14px; color: aliceblue; font: bold; font-family: 黑体;">仅看今日市值增长重点品种</label>
+    <input type="checkbox" id="limitOiContract" name="limitOiContract">
+    <label for="limitOiContract" style="font-size: 14px; color: aliceblue; font: bold; font-family: 黑体;">仅看历史持仓新高合约</label>
+    <input type="checkbox" id="recentLimitOiContract" name="recentLimitOiContract" checked>
+    <label for="recentLimitOiContract" style="font-size: 14px; color: aliceblue; font: bold; font-family: 黑体;">仅看近期持仓新高合约</label>
+    <input type="checkbox" id="upContract" name="upContract">
+    <label for="upContract" style="font-size: 14px; color: aliceblue; font: bold; font-family: 黑体;">仅看涨合约</label>
+    <input type="checkbox" id="downContract" name="downContract">
+    <label for="downContract" style="font-size: 14px; color: aliceblue; font: bold; font-family: 黑体;">仅看跌合约</label>
+  </div>
+  <br>
+  <table id="live-table">
+    <tr>
+      <th>WAITING FOR DATA</th>
+    </tr>
+  </table>
+  <button id="closeSOT">X</button>
+  <br>
+  <table id="symbol-opt-table">
+    <tr>
+      <th>SymOpt</th>
+    </tr>
+  </table>
+  <br>
+  <div class="double-dash-line" text-title="OI SELECT"></div>
+  <br>
+  <form id="option-filter">
+    <input type="checkbox" id="filter-call" name="filter-call">
+    <label for="filter-call" style="font-size: 14px; color: rgb(238, 20, 20); font: bold; font-family: 'Courier New', Courier, monospace;">Call</label>
+
+    <input type="checkbox" id="filter-put" name="filter-put">
+    <label for="filter-put" style="font-size: 14px; color: rgb(17, 209, 104); font: bold; font-family: 'Courier New', Courier, monospace;">Put</label>
+
+    <input type="checkbox" id="filter-oi-inc" name="filter-oi-inc" checked>
+    <label for="filter-oi-inc" style="font-size: 14px; color: rgb(240, 240, 240); font: bold; font-family: 'Courier New', Courier, monospace;">OI FIT↑</label>
+
+    <input type="checkbox" id="filter-md-inc" name="filter-md-inc">
+    <label for="filter-md-inc" style="font-size: 14px; color: rgb(238, 20, 20); font: bold; font-family: 'Courier New', Courier, monospace;">Md↑</label>
+
+    <input type="checkbox" id="filter-md-dec" name="filter-md-dec">
+    <label for="filter-md-dec" style="font-size: 14px; color: rgb(17, 209, 104); font: bold; font-family: 'Courier New', Courier, monospace;">Md↓</label>
+
+    <input type="checkbox" id="filter-prem-inc" name="filter-prem-inc">
+    <label for="filter-prem-inc" style="font-size: 14px; color: rgb(238, 20, 20); font: bold; font-family: 'Courier New', Courier, monospace;">Premium↑</label>
+
+    <input type="checkbox" id="filter-prem-dec" name="filter-prem-dec">
+    <label for="filter-prem-dec" style="font-size: 14px; color: rgb(17, 209, 104); font: bold; font-family: 'Courier New', Courier, monospace;">Premium↓</label>
+
+    <input type="checkbox" id="filter-undLs-inc" name="filter-undLs-inc">
+    <label for="filter-undLs-inc" style="font-size: 14px; color: rgb(238, 20, 20); font: bold; font-family: 'Courier New', Courier, monospace;">UndLS↑</label>
+
+    <input type="checkbox" id="filter-undLs-dec" name="filter-undLs-dec">
+    <label for="filter-undLs-dec" style="font-size: 14px; color: rgb(17, 209, 104); font: bold; font-family: 'Courier New', Courier, monospace;">UndLS↓</label>
+
+    <input type="checkbox" id="filter-optLs-inc" name="filter-optLs-inc">
+    <label for="filter-optLs-inc" style="font-size: 14px; color: rgb(238, 20, 20); font: bold; font-family: 'Courier New', Courier, monospace;">OptLS↑</label>
+
+    <input type="checkbox" id="filter-optLs-dec" name="filter-optLs-dec">
+    <label for="filter-optLs-dec" style="font-size: 14px; color: rgb(17, 209, 104); font: bold; font-family: 'Courier New', Courier, monospace;">OptLS↓</label>
+
+    <input type="checkbox" id="filter-undMov-inc" name="filter-undMov-inc">
+    <label for="filter-undMov-inc" style="font-size: 14px; color: rgb(238, 20, 20); font: bold; font-family: 'Courier New', Courier, monospace;">MovUnd↑</label>
+
+    <input type="checkbox" id="filter-undMov-dec" name="filter-undMov-dec">
+    <label for="filter-undMov-dec" style="font-size: 14px; color: rgb(17, 209, 104); font: bold; font-family: 'Courier New', Courier, monospace;">MovUnd↓</label>
+
+    <input type="checkbox" id="filter-optMov-inc" name="filter-optMov-inc">
+    <label for="filter-optMov-inc" style="font-size: 14px; color: rgb(238, 20, 20); font: bold; font-family: 'Courier New', Courier, monospace;">MovOpt↑</label>
+
+    <input type="checkbox" id="filter-optMov-dec" name="filter-optMov-dec">
+    <label for="filter-optMov-dec" style="font-size: 14px; color: rgb(17, 209, 104); font: bold; font-family: 'Courier New', Courier, monospace;">MovOpt↓</label>
+
+    <input type="checkbox" id="filter-movUnd-link" name="filter-movUnd-link" checked>
+    <label for="filter-movUnd-link" style="font-size: 14px; color: gold; font: bold; font-family: 'Courier New', Courier, monospace;">LINK-MovUnd</label>
+
+    <input type="checkbox" id="filter-UndLs-link" name="filter-UndLs-link" checked>
+    <label for="filter-UndLs-link" style="font-size: 14px; color: gold; font: bold; font-family: 'Courier New', Courier, monospace;">LINK-UndLs</label>
+
+    <br>
+
+    <label for="filter-p-delta" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Price Chg</label>
+    <input type="number" id="filter-p-delta" name="filter-p-delta" step="1" value="50" required>
+
+    <label for="filter-mkt-val" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Mkt Value</label>
+    <input type="number" id="filter-mkt-val" name="filter-mkt-val" step="1" value="20000" required>
+    
+    <label for="filter-ratio-l" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Ratio Bottom</label>
+    <input type="number" id="filter-ratio-l" name="filter-ratio-l" step="0.1" value="3" required>
+
+    <label for="filter-ratio-h" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Ratio Top</label>
+    <input type="number" id="filter-ratio-h" name="filter-ratio-h" step="0.1" value="10" required>
+
+    <label for="filter-exp-l" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Exp Min</label>
+    <input type="number" id="filter-exp-l" name="filter-exp-l" step="1" value="0" required>
+
+    <label for="filter-exp-h" style="font-size: 14px; color: aliceblue; font: bold; font-family: 'Courier New', Courier, monospace; margin-left: 10px;">Exp Max</label>
+    <input type="number" id="filter-exp-h" name="filter-exp-h" step="1" value="40" required>
+
+    <br>
+    
+    <button type="submit" style="background-color: rgb(255, 198, 9); color: rgb(8, 48, 88); padding: 10px 20px; font: bold; font-family: 'Courier New', Courier, monospace;">Run</button>
+    <button type="close" onclick="removeOptionFilterTable(event)" style="background-color: rgb(255, 198, 9); color: rgb(8, 48, 88); padding: 10px 20px; font: bold; font-family: 'Courier New', Courier, monospace;">X</button>
+  </form>
+  <table id="option-filter-table">
+    <tr>
+      <th>OptionFilter</th>
+    </tr>
+  </table>
+  <br>
+  
+  <audio id="newTargetAudio" controls style="display: none;">
+    <source src="../static/audio/new_target.mp3" type="audio/mpeg">
+  </audio>
+  <!-- <audio id="notificationAudio" controls style="display: none;">
+    <source src="../static/audio/notice.mp3" type="audio/mpeg">
+  </audio> -->
+  <script src="../static/js/data.js"></script>
+  <script src="../static/js/watchList.js"></script>
+</body>
+</html>

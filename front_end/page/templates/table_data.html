@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DataFrame Display</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>CSV as HTML Table</h1>
+    <div>
+        <!-- Flask 会将 html_table 变量嵌入到这里 -->
+        {{ html_table | safe }}
+    </div>
+</body>
+</html>

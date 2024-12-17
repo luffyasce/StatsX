@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Let's rock!</title>
+    <link rel="icon" href="../static/image/page_icon.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.js"></script>
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        font-weight: bold;
+        font-size: 12px;
+        width: 100%;
+        color: #004e66;
+    }
+    th, td {
+        text-align: center;
+        padding: 8px;
+    }
+    th {
+        background-color: #FFFFF3;
+        border-bottom: 2px solid #aaa;
+    }
+    tr:nth-child(odd) {
+        background-color: #F0E5DE;
+    }
+    tr:nth-child(even) {
+        background-color: #F8FAFF;
+    }
+    tr:hover {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* 添加阴影效果来凸显 */
+    }
+</style>
+<body>
+    <div id="keyContainer" data-key="{{ key }}"></div>
+
+    <table id="vipPos">
+        <tr>
+            <th>distinguished broker position data</th>
+        </tr>
+    </table>
+    <br>
+    <div id="barContainer", class="barContainer" style="display: flex; max-height: 600px;">
+        <div id="SymPosContainer" style=" display:inline-block; border: none; width: 100%;">
+            <canvas id="symPosCanvas"></canvas>
+        </div>
+    </div>
+    <br>
+    <div id="lineContainer", class="lineContainer" style="display: flex; max-height: 600px;">
+        <div id="posHistContainer" style=" display:inline-block; border: none; width: 100%;">
+        </div>
+    </div>
+
+    <script src="../static/js/vipPos.js"></script>
+</body>
+</html>

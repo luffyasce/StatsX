@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>Let's rock!</title>
+  <link rel="icon" href="../static/image/page_icon.png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.js"></script>
+</head>
+<style>
+  table {
+    border-collapse: collapse;
+    font-weight: bold;
+    font-size: 12px;
+    width: 100%;
+    color: #004e66;
+  }
+  th, td {
+    text-align: center;
+    padding: 8px;
+  }
+  th {
+    background-color: #FFFFF3;
+    border-bottom: 2px solid #aaa;
+  }
+  tr:nth-child(odd) {
+    background-color: #F0E5DE;
+  }
+  tr:nth-child(even) {
+    background-color: #F8FAFF;
+  }
+  tr:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* 添加阴影效果来凸显 */
+  }
+  .dash-line {
+    width: 100%;
+    height: 0;
+    border-style: dashed;
+  }
+</style>
+<body>
+  <div id="keyContainer" data-key="{{ key }}"></div>
+
+  <table id="validPos">
+    <tr>
+      <th>valid future position data</th>
+    </tr>
+  </table>
+  <br>
+  <div class="dash-line"></div>
+  <table id="vipPos">
+    <tr>
+      <th>distinguished broker position data</th>
+    </tr>
+  </table>
+  <br>
+  <div class="dash-line"></div>
+  <table id="vipOptPos">
+    <tr>
+      <th>distinguished broker option position data</th>
+    </tr>
+  </table>
+
+  <div id="Container1", class="histMdContainer" style="display: flex; max-height: 600px;">
+    <div id="Container1Left" style=" display:inline-block; border: none; width: 55%;">
+      <canvas id="Canvas1Left"></canvas>
+    </div>
+    <div id="Container1Right" style=" display:inline-block; border: none; width: 35%;">
+      <canvas id="Canvas1Right"></canvas>
+    </div>
+    <div id="HistFilterOrderContainerRight" style=" display:inline-block; border: none; width: 10%;">
+      <canvas id="histFoCanvas"></canvas>
+    </div>
+  </div>
+  <div id="stakeChart" class="stakeContainer" style="display: flex; max-height: 600px;">
+    <div id="chartContainer-left" style=" display:inline-block; border: none; width: 55%;">
+      <canvas id="chartCanvas-left"></canvas>
+    </div>
+    <div id="chartContainer-right1" style=" display:inline-block; border: none; width: 15%;">
+      <canvas id="chartCanvas-right1"></canvas>
+    </div>
+    <div id="chartContainer-right2" style=" display:inline-block; border: none; width: 15%;">
+      <canvas id="chartCanvas-right2"></canvas>
+    </div>
+    <div id="chartContainer-right3" style=" display:inline-block; border: none; width: 15%;">
+      <canvas id="chartCanvas-right3"></canvas>
+    </div>
+  </div>
+  <div id="Container3", class="archiveContainer" style="display: flex; max-height: 600px;">
+    <div id="Container3Left" style=" display:inline-block; border: none; width: 55%;">
+      <canvas id="Canvas3Left"></canvas>
+    </div>
+    <div id="Container3Right" style=" display:inline-block; border: none; width: 45%;">
+      <canvas id="Canvas3Right"></canvas>
+    </div>
+  </div>
+  <script src="../static/js/localChartUnd.js"></script>
+</body>
+</html>
