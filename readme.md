@@ -24,4 +24,9 @@
     
 
     
-    ![snapshot1](./.misc/cut1.png)
+    ![snapshot1](.//.misc//cut1.png)
+    ![snapshot1](.//.misc//cut2.png)
+    ![snapshot1](.//.misc//cut3.png)
+    ![snapshot1](.//.misc//cut4.png)
+    ![snapshot1](.//.misc//cut5.png)
+    ![snapshot1](.//.misc//cut6.png)
